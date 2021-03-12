@@ -171,7 +171,7 @@ function startTurn() {
 
   }
 
-// Load dice onto page
+  // Load dice onto page
   for (let i = 0; i < 13; i++) {
 
     // Add a new piece to the page
@@ -202,11 +202,6 @@ function startTurn() {
   // Perform when die is clicked
   $(".piece").click(drawDie);
 
-  // Put dice in order
-  //dice.sort(sortDice);
-  //$("div#gameArea").empty();
-  //reroll()
-  //numberRerolls++;
 
 }
 
@@ -232,17 +227,32 @@ function lost() {
 
 function endTurn() {
 
-  $("button#reroll").hide();
-  $("button#endTurn").hide();
-
   if (lost() === true) {
+
     $("p#message").text("Too many tanks! No points this turn.");
     $("button#startTurn").show();
+    $("button#reroll").hide();
+    $("button#endTurn").hide();
   } else {
-    startTurn();
+
     $("button#reroll").show();
     $("button#endTurn").show();
-  }
+
+      $("button#reroll").hide();
+      $("button#endTurn").hide();
+
+      if (humanPoints === 0) {
+        $("button#scoreHumans").show();
+      }
+      if (cowPoints === 0) {
+        $("button#scoreCows").show();
+      }
+      if (chickenPoints === 0) {
+        $("button#scoreChickens").show();
+      }
+
+    }
+
 
 }
 
@@ -251,28 +261,30 @@ function reroll() {
   numberRerolls--;
 
 
-  if(numberRerolls === 0) {
+  if (numberRerolls === 0) {
 
     if (lost() === true) {
       $("p#message").text("Too many tanks! No points this turn.");
       $("button#startTurn").show();
+      $("button#reroll").hide();
+      $("button#endTurn").hide();
     } else {
       $("button#reroll").show();
       $("button#endTurn").show();
 
-      if(numberRerolls === 0) {
+      if (numberRerolls === 0) {
         $("button#reroll").hide();
         $("button#endTurn").hide();
 
-        if(humanPoints === 0) {
-        $("button#scoreHumans").show();
-      }
-      if(cowPoints === 0) {
-        $("button#scoreCows").show();
-      }
-      if(chickenPoints === 0) {
-        $("button#scoreChickens").show();
-      }
+        if (humanPoints === 0) {
+          $("button#scoreHumans").show();
+        }
+        if (cowPoints === 0) {
+          $("button#scoreCows").show();
+        }
+        if (chickenPoints === 0) {
+          $("button#scoreChickens").show();
+        }
 
       }
 
@@ -283,48 +295,52 @@ function reroll() {
   } else {
 
 
-  $("span#numberRerolls").text(numberRerolls);
+    $("span#numberRerolls").text(numberRerolls);
 
-  $("div#gameArea").empty();
+    $("div#gameArea").empty();
 
-  for (let i = 0; i < 13; i++) {
+    for (let i = 0; i < 13; i++) {
 
-    if (dice[i].held === false) {
-      createDieObject(i);
+      if (dice[i].held === false) {
+        createDieObject(i);
+      }
+
+      dice.sort(sortDice);
+
+
     }
 
-    dice.sort(sortDice);
+    for (let i = 0; i < 13; i++) {
+
+      // Add a new piece to the page
+      $("<div>").attr("id", i).addClass("piece").appendTo("#gameArea");
+
+      // If die happens to be tank
+      if (dice[i].face === "tank") {
+        $(`div#${i}`).addClass("held tank");
+      }
+
+      if (dice[i].held === true) {
+        $(`div#${i}`).addClass("held");
+      }
+
+      // Append image to new piece and set alt text
+      $("<img>").attr({
+        src: `img/${dice[i].face}.png`,
+        alt: capitalize(dice[i].face)
+      }).appendTo(`div#${i}`);
+
+      // Append name of die to piece
+      $("<p>").text(capitalize(dice[i].face)).appendTo(`div#${i}`);
 
 
-    // Add a new piece to the page
-    $("<div>").attr("id", i).addClass("piece").appendTo("#gameArea");
+      $(`div#${i}`).bind('click', {
+        param: i
+      }, toggleHeld);
 
-    // If die happens to be tank
-    if (dice[i].face === "tank") {
-      $(`div#${i}`).addClass("held tank");
     }
-
-    if (dice[i].held === true) {
-      $(`div#${i}`).addClass("held");
-    }
-
-    // Append image to new piece and set alt text
-    $("<img>").attr({
-      src: `img/${dice[i].face}.png`,
-      alt: capitalize(dice[i].face)
-    }).appendTo(`div#${i}`);
-
-    // Append name of die to piece
-    $("<p>").text(capitalize(dice[i].face)).appendTo(`div#${i}`);
-
-
-    $(`div#${i}`).bind('click', {
-      param: i
-    }, toggleHeld);
 
   }
-
-}
 
   // Perform when die is clicked
   $(".piece").click(drawDie);
@@ -347,7 +363,7 @@ function scoreHumans() {
       $("button#startTurn").show();
       humanPoints++;
       $("span#humanPoints").text(humanPoints);
-      $("p#message").text(`You scored ${humanPoints} for humans`)
+      $("p#message").text(`You scored ${humanPoints} point(s) for humans`)
     }
 
 
@@ -355,8 +371,7 @@ function scoreHumans() {
 
   if (humanPoints > 0 && cowPoints > 0 && chickenPoints > 0) {
     endGame();
-  } else {
-  }
+  } else {}
 
 
 }
@@ -371,7 +386,7 @@ function scoreCows() {
       $("button#startTurn").show();
       cowPoints++;
       $("span#cowPoints").text(cowPoints);
-      $("p#message").text(`You scored ${cowPoints} for cows`)
+      $("p#message").text(`You scored ${cowPoints} point(s) for cows`)
     }
   }
 
@@ -393,7 +408,7 @@ function scoreChickens() {
       $("button#startTurn").show();
       chickenPoints++;
       $("span#chickenPoints").text(chickenPoints);
-      $("p#message").text(`You scored ${chickenPoints} for chickens`);
+      $("p#message").text(`You scored ${chickenPoints} point(s) for chickens`);
 
 
     }
