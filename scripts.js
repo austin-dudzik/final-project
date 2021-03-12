@@ -2,17 +2,18 @@
 let humanPoints = 0;
 let cowPoints = 0;
 let chickenPoints = 0;
-
 // Define variable
-let numberRerolls;
+let numberRerolls = 2;
 
-// Assign functions to buttons
-$("button#startTurn").click(startTurn);
-$("button#reroll").click(reroll);
-$("button#endTurn").click(endTurn);
-$("button#scoreHumans").click(scoreHumans);
-$("button#scoreCows").click(scoreCows);
-$("button#scoreChickens").click(scoreChickens);
+// Add point and reroll values to page
+$("span#humanPoints").text(humanPoints);
+$("span#cowPoints").text(cowPoints);
+$("span#chickenPoints").text(chickenPoints);
+$("span#numberRerolls").text(numberRerolls);
+
+let totalTanks = 0;
+
+let totalRayguns = 0
 
 // Define each type of die face
 let faces = ["", "tank", "raygun", "raygun", "human", "cow", "chicken"];
@@ -27,15 +28,16 @@ function capitalize(s) {
 
 $(document).ready(function() {
 
+  // Assign functions to buttons
+  $("button#startTurn").click(startTurn);
+  $("button#reroll").click(reroll);
+  $("button#endTurn").click(endTurn);
+  $("button#scoreHumans").click(scoreHumans);
+  $("button#scoreCows").click(scoreCows);
+  $("button#scoreChickens").click(scoreChickens);
+
   // Start the turn
   startTurn();
-
-  // Add point and reroll values to page
-  $("span#humanPoints").text(humanPoints);
-  $("span#cowPoints").text(cowPoints);
-  $("span#chickenPoints").text(chickenPoints);
-
-  $("span#numberRerolls").text(numberRerolls);
 
 
 });
@@ -143,11 +145,7 @@ function startTurn() {
 
   $("p#message").empty();
 
-  numberRerolls = 2;
-
-  totalTanks = 0;
-
-  totalRayguns = 0;
+  numberRerolls = 2;;
 
   $("button#startTurn").hide();
   $("button#reroll").show();
@@ -167,6 +165,14 @@ function startTurn() {
 
     // Create die with index
     createDieObject(i);
+
+    // Sort the array
+    dice.sort(sortDice);
+
+  }
+
+// Load dice onto page
+  for (let i = 0; i < 13; i++) {
 
     // Add a new piece to the page
     $("<div>").attr("id", i).addClass("piece").appendTo("#gameArea");
@@ -203,9 +209,6 @@ function startTurn() {
   //numberRerolls++;
 
 }
-
-let totalTanks = 0;
-let totalRayguns = 0;
 
 function lost() {
 
