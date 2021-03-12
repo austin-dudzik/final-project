@@ -13,7 +13,7 @@ $("span#numberRerolls").text(numberRerolls);
 
 let totalTanks = 0;
 
-let totalRayguns = 0
+let totalRayguns = 0;
 
 // Define each type of die face
 let faces = ["", "tank", "raygun", "raygun", "human", "cow", "chicken"];
@@ -143,6 +143,11 @@ function toggleHeld(event) {
 
 function startTurn() {
 
+  dice.splice(0, dice.length);
+
+  totalTanks = 0;
+  totalRayguns = 0;
+
   $("p#message").empty();
 
   numberRerolls = 2;;
@@ -258,7 +263,12 @@ function endTurn() {
 
 function reroll() {
 
+  totalTanks = 0;
+  totalRayguns = 0;
+
   numberRerolls--;
+
+  $("span#numberRerolls").text(numberRerolls);
 
 
   if (numberRerolls === 0) {
