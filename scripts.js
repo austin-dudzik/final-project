@@ -247,21 +247,38 @@ function reroll() {
 
   numberRerolls--;
 
+
   if(numberRerolls === 0) {
-    $("button#reroll").hide();
-    $("button#endTurn").hide();
 
-    if(humanPoints === 0) {
-    $("button#scoreHumans").show();
-  }
-  if(chickenPoints === 0) {
-    $("button#scoreCows").show();
-  }
-  if(cowPoints === 0) {
-    $("button#scoreChickens").show();
-  }
+    if (lost() === true) {
+      $("p#message").text("Too many tanks! No points this turn.");
+      $("button#startTurn").show();
+    } else {
+      $("button#reroll").show();
+      $("button#endTurn").show();
 
-  }
+      if(numberRerolls === 0) {
+        $("button#reroll").hide();
+        $("button#endTurn").hide();
+
+        if(humanPoints === 0) {
+        $("button#scoreHumans").show();
+      }
+      if(cowPoints === 0) {
+        $("button#scoreCows").show();
+      }
+      if(chickenPoints === 0) {
+        $("button#scoreChickens").show();
+      }
+
+      }
+
+
+
+    }
+
+  } else {
+
 
   $("span#numberRerolls").text(numberRerolls);
 
@@ -304,6 +321,8 @@ function reroll() {
 
   }
 
+}
+
   // Perform when die is clicked
   $(".piece").click(drawDie);
 
@@ -320,6 +339,9 @@ function scoreHumans() {
   for (let i = 0; i < dice.length; i++) {
     if (dice[i].face === "human" && dice[i].held === true) {
       $("button#scoreHumans").hide();
+      $("button#scoreCows").hide();
+      $("button#scoreChickens").hide();
+      $("button#startTurn").show();
       humanPoints++;
       $("span#humanPoints").text(humanPoints);
       $("p#message").text(`You scored ${humanPoints} for humans`)
@@ -331,7 +353,6 @@ function scoreHumans() {
   if (humanPoints > 0 && cowPoints > 0 && chickenPoints > 0) {
     endGame();
   } else {
-    reroll();
   }
 
 
@@ -341,7 +362,10 @@ function scoreCows() {
 
   for (let i = 0; i < dice.length; i++) {
     if (dice[i].face === "cow" && dice[i].held === true) {
+      $("button#scoreHumans").hide();
       $("button#scoreCows").hide();
+      $("button#scoreChickens").hide();
+      $("button#startTurn").show();
       cowPoints++;
       $("span#cowPoints").text(cowPoints);
       $("p#message").text(`You scored ${cowPoints} for cows`)
@@ -360,10 +384,15 @@ function scoreChickens() {
 
   for (let i = 0; i < dice.length; i++) {
     if (dice[i].face === "chicken" && dice[i].held === true) {
+      $("button#scoreHumans").hide();
+      $("button#scoreCows").hide();
       $("button#scoreChickens").hide();
+      $("button#startTurn").show();
       chickenPoints++;
       $("span#chickenPoints").text(chickenPoints);
-      $("p#message").text(`You scored ${chickenPoints} for chickens`)
+      $("p#message").text(`You scored ${chickenPoints} for chickens`);
+
+
     }
   }
 
