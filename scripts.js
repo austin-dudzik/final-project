@@ -141,7 +141,13 @@ function toggleHeld(event) {
 
 function startTurn() {
 
+  $("p#message").empty();
+
   numberRerolls = 2;
+
+  totalTanks = 0;
+
+  totalRayguns = 0;
 
   $("button#startTurn").hide();
   $("button#reroll").show();
@@ -228,8 +234,11 @@ function endTurn() {
 
   if (lost() === true) {
     $("p#message").text("Too many tanks! No points this turn.");
+    $("button#startTurn").show();
   } else {
     startTurn();
+    $("button#reroll").show();
+    $("button#endTurn").show();
   }
 
 }
@@ -316,13 +325,16 @@ function scoreHumans() {
       $("p#message").text(`You scored ${humanPoints} for humans`)
     }
 
-    if (humanPoints > 0 && cowPoints > 0 && chickenPoints > 0) {
-      endGame();
-    } else {
-    }
-
 
   }
+
+  if (humanPoints > 0 && cowPoints > 0 && chickenPoints > 0) {
+    endGame();
+  } else {
+    reroll();
+  }
+
+
 }
 
 function scoreCows() {
@@ -352,7 +364,6 @@ function scoreChickens() {
       chickenPoints++;
       $("span#chickenPoints").text(chickenPoints);
       $("p#message").text(`You scored ${chickenPoints} for chickens`)
-      reroll();
     }
   }
 
