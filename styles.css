@@ -1,0 +1,31 @@
+.piece {
+  background:#eff2f7;
+  border: 5px solid black;
+  display:inline-block;
+  margin: 20px;
+  padding: 10px;
+  padding-left:30px;
+  padding-right:30px;
+  cursor:pointer;
+  text-align: center;
+  transition: .2s
+}
+
+.piece:hover {
+  background: #00000020;
+}
+
+.held {
+  border: 5px solid blue;
+}
+
+.tank {
+  pointer-events: none;
+}
+
+#message {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px
+}

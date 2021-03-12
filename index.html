@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Alien Dice</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container-fluid mx-auto">
+
+  <h1>Alien Dice</h1>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <h3>Humans: <span id="humanPoints"></span></h3>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Cows: <span id="cowPoints"></span></h3>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Chickens: <span id="chickenPoints"></span></h3>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Rerolls remaining: <span id="numberRerolls"></span></h3>
+    </div>
+
+    <p id="message"></p>
+
+  </div>
+
+  <div id="gameArea"></div>
+
+  <button class="btn btn-primary" id="startTurn">Start turn</button>
+  <button class="btn btn-primary" id="reroll">Reroll</button>
+  <button class="btn btn-primary" id="endTurn">End turn</button>
+
+  <button class="btn btn-primary" id="scoreHumans">Score Humans</button>
+  <button class="btn btn-primary" id="scoreCows">Score Cows</button>
+  <button class="btn btn-primary" id="scoreChickens">Score Chickens</button>
+
+</div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="scripts.js"></script>
+
+</html>
