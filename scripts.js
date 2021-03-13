@@ -232,6 +232,10 @@ function lost() {
 
 function endTurn() {
 
+  numberRerolls--;
+
+  $("span#numberRerolls").text(numberRerolls);
+
   if (lost() === true) {
 
     $("p#message").text("Too many tanks! No points this turn.");
