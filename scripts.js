@@ -274,7 +274,6 @@ function reroll() {
 
   $("span#numberRerolls").text(numberRerolls);
 
-
   if (numberRerolls === 0) {
 
     if (lost() === true) {
@@ -302,25 +301,26 @@ function reroll() {
 
       }
 
-
-
     }
 
   } else {
 
-
+    // Update rerolls on page
     $("span#numberRerolls").text(numberRerolls);
 
+    // Empty the game board
     $("div#gameArea").empty();
 
+    // Create new die objects
     for (let i = 0; i < 13; i++) {
 
+      // Only if die is not held
       if (dice[i].held === false) {
         createDieObject(i);
       }
 
+      // Sort the array
       dice.sort(sortDice);
-
 
     }
 
@@ -334,6 +334,7 @@ function reroll() {
         $(`div#${i}`).addClass("held tank");
       }
 
+      // If die is held
       if (dice[i].held === true) {
         $(`div#${i}`).addClass("held");
       }
@@ -347,7 +348,7 @@ function reroll() {
       // Append name of die to piece
       $("<p>").text(capitalize(dice[i].face)).appendTo(`div#${i}`);
 
-
+      // Bind parameter
       $(`div#${i}`).bind('click', {
         param: i
       }, toggleHeld);
@@ -362,6 +363,7 @@ function reroll() {
 
 }
 
+// Function called to end game
 function endGame() {
   $("button").hide();
   $("p#message").text(`Game over! Your final score was ${humanPoints + cowPoints + chickenPoints}!`)
@@ -383,6 +385,7 @@ function scoreHumans() {
 
   }
 
+// If all collection types are scored
   if (humanPoints > 0 && cowPoints > 0 && chickenPoints > 0) {
     endGame();
   } else {}
