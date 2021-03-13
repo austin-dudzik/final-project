@@ -2,18 +2,17 @@
 let humanPoints = 0;
 let cowPoints = 0;
 let chickenPoints = 0;
-// Define variable
+
+// Define variables
 let numberRerolls = 2;
+let totalTanks = 0;
+let totalRayguns = 0;
 
 // Add point and reroll values to page
 $("span#humanPoints").text(humanPoints);
 $("span#cowPoints").text(cowPoints);
 $("span#chickenPoints").text(chickenPoints);
 $("span#numberRerolls").text(numberRerolls);
-
-let totalTanks = 0;
-
-let totalRayguns = 0;
 
 // Define each type of die face
 let faces = ["", "tank", "raygun", "raygun", "human", "cow", "chicken"];
@@ -27,7 +26,6 @@ function capitalize(s) {
 }
 
 $(document).ready(function() {
-
   // Assign functions to buttons
   $("button#startTurn").click(startTurn);
   $("button#reroll").click(reroll);
@@ -38,7 +36,6 @@ $(document).ready(function() {
 
   // Start the turn
   startTurn();
-
 
 });
 
@@ -81,7 +78,6 @@ function createDieObject(index) {
 
 }
 
-
 function sortDice(a, b) {
 
   // If a and b are equal
@@ -110,8 +106,6 @@ function sortDice(a, b) {
   }
 
 };
-
-
 
 function rollAllDice() {
 
@@ -143,26 +137,30 @@ function toggleHeld(event) {
 
 function startTurn() {
 
+  // Clear the array
   dice.splice(0, dice.length);
 
+  // Set values back to 0
   totalTanks = 0;
   totalRayguns = 0;
 
+  // Clear the page message
   $("p#message").empty();
 
+  // Set rerolls back to 2
   numberRerolls = 2;;
 
+  // Hide/show buttons
   $("button#startTurn").hide();
   $("button#reroll").show();
   $("button#endTurn").show();
-
-  $("span#numberRerolls").text(numberRerolls);
-
-  // Hide buttons on page load
   $("button#scoreHumans").hide();
   $("button#scoreCows").hide();
   $("button#scoreChickens").hide();
 
+  $("span#numberRerolls").text(numberRerolls);
+
+  // Empty the game area
   $("div#gameArea").empty();
 
   // Generate 13 random dice on load
@@ -432,14 +430,12 @@ function scoreHumans() {
       $("p#message").text(`You scored ${humanPoints} point(s) for humans`)
     }
 
-
   }
 
 // If all collection types are scored
   if (humanPoints > 0 && cowPoints > 0 && chickenPoints > 0) {
     endGame();
-  } else {}
-
+  }
 
 }
 
@@ -459,8 +455,6 @@ function scoreCows() {
 
   if (humanPoints > 0 && cowPoints > 0 && chickenPoints > 0) {
     endGame();
-  } else {
-
   }
 
 }
@@ -482,8 +476,6 @@ function scoreChickens() {
 
   if (humanPoints > 0 && cowPoints > 0 && chickenPoints > 0) {
     endGame();
-  } else {
-
   }
 
 }
