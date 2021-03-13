@@ -276,6 +276,56 @@ function reroll() {
 
   if (numberRerolls === 0) {
 
+    // Update rerolls on page
+    $("span#numberRerolls").text(numberRerolls);
+
+    // Empty the game board
+    $("div#gameArea").empty();
+
+    // Create new die objects
+    for (let i = 0; i < 13; i++) {
+
+      // Only if die is not held
+      if (dice[i].held === false) {
+        createDieObject(i);
+      }
+
+      // Sort the array
+      dice.sort(sortDice);
+
+    }
+
+    for (let i = 0; i < 13; i++) {
+
+      // Add a new piece to the page
+      $("<div>").attr("id", i).addClass("piece").appendTo("#gameArea");
+
+      // If die happens to be tank
+      if (dice[i].face === "tank") {
+        $(`div#${i}`).addClass("held tank");
+      }
+
+      // If die is held
+      if (dice[i].held === true) {
+        $(`div#${i}`).addClass("held");
+      }
+
+      // Append image to new piece and set alt text
+      $("<img>").attr({
+        src: `img/${dice[i].face}.png`,
+        alt: capitalize(dice[i].face)
+      }).appendTo(`div#${i}`);
+
+      // Append name of die to piece
+      $("<p>").text(capitalize(dice[i].face)).appendTo(`div#${i}`);
+
+      // Bind parameter
+      $(`div#${i}`).bind('click', {
+        param: i
+      }, toggleHeld);
+
+    }
+
     if (lost() === true) {
       $("p#message").text("Too many tanks! No points this turn.");
       $("button#startTurn").show();
@@ -426,7 +476,6 @@ function scoreChickens() {
       chickenPoints++;
       $("span#chickenPoints").text(chickenPoints);
       $("p#message").text(`You scored ${chickenPoints} point(s) for chickens`);
-
 
     }
   }
